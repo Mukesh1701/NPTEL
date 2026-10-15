@@ -305,7 +305,7 @@ export default function WeekPracticePage() {
                 onClick={handleNext}
                 className="btn-primary flex-1 py-3 text-sm"
               >
-                {currentIndex === questions.length - 1 ? 'Finish Week 1 →' : 'Next Question →'}
+                {currentIndex === questions.length - 1 ? `Finish Week ${week} →` : 'Next Question →'}
               </button>
             ) : (
               <button

@@ -4,9 +4,9 @@ import { loadProgress } from '../utils/storage';
 
 const WEEK_TOPICS: Record<number, string> = {
   1: 'Listening, Personality, Thinking Hats & Communication',
-  2: 'Week 2 Assignments (Coming Soon)',
-  3: 'Week 3 Assignments (Coming Soon)',
-  4: 'Week 4 Assignments (Coming Soon)',
+  2: 'Positivity, Johari Window, Voice & Telephonic Etiquette',
+  3: 'Proxemics, Haptics, Chronemics & Listening Barriers',
+  4: 'Negotiation Skills, WATNA/ZOPA, Culture & Needs',
   5: 'Week 5 Assignments (Coming Soon)',
   6: 'Week 6 Assignments (Coming Soon)',
   7: 'Week 7 Assignments (Coming Soon)',
