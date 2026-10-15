@@ -1,0 +1,277 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700;800&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-display: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  color-scheme: dark;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: #000000;
+  color: #ffffff;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+
+/* Custom black & white scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #0a0a0a;
+}
+::-webkit-scrollbar-thumb {
+  background: #333333;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #666666;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.3s ease-out;
+}
+
+/* Black & White Cards */
+.bw-card {
+  background: #0a0a0a;
+  border: 1px solid #262626;
+  border-radius: 12px;
+  transition: border-color 0.2s ease, transform 0.2s ease, background-color 0.2s ease;
+}
+
+.bw-card:hover {
+  border-color: #525252;
+}
+
+/* Option Buttons in Black & White */
+.option-btn {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px 16px;
+  border-radius: 10px;
+  background: #0f0f0f;
+  border: 1.5px solid #262626;
+  color: #e5e5e5;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  width: 100%;
+  text-align: left;
+  user-select: none;
+}
+
+.option-btn:hover:not(.disabled):not(.submitted) {
+  background: #171717;
+  border-color: #737373;
+  color: #ffffff;
+}
+
+.option-btn.selected {
+  background: #1f1f1f;
+  border-color: #ffffff;
+  color: #ffffff;
+  box-shadow: 0 0 0 1px #ffffff;
+}
+
+.option-btn.correct {
+  background: #ffffff;
+  border-color: #ffffff;
+  color: #000000 !important;
+  font-weight: 600;
+}
+
+.option-btn.correct .option-letter {
+  background: #000000 !important;
+  color: #ffffff !important;
+  border-color: #000000 !important;
+}
+
+.option-btn.incorrect {
+  background: #0a0a0a;
+  border-color: #525252;
+  color: #a3a3a3;
+  border-style: dashed;
+}
+
+.option-btn.incorrect .option-letter {
+  background: #262626 !important;
+  color: #737373 !important;
+  border-color: #404040 !important;
+}
+
+.option-btn.dimmed {
+  opacity: 0.35;
+}
+
+/* Option Letter badge */
+.option-letter {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  font-weight: 700;
+  font-size: 13px;
+  background: #1a1a1a;
+  border: 1px solid #404040;
+  color: #d4d4d4;
+  flex-shrink: 0;
+  transition: all 0.18s ease;
+}
+
+.option-btn.selected .option-letter {
+  background: #ffffff;
+  color: #000000;
+  border-color: #ffffff;
+}
+
+/* Question Grid Navigator Pills */
+.q-pill {
+  height: 38px;
+  width: 38px;
+  min-width: 38px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  border: 1px solid #262626;
+  background: #0d0d0d;
+  color: #a3a3a3;
+}
+
+.q-pill:hover {
+  border-color: #737373;
+  color: #ffffff;
+}
+
+.q-pill.current {
+  background: #ffffff;
+  color: #000000;
+  border-color: #ffffff;
+  font-weight: 800;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
+}
+
+.q-pill.answered {
+  background: #262626;
+  border-color: #525252;
+  color: #ffffff;
+}
+
+.q-pill.correct-pill {
+  background: #ffffff;
+  color: #000000;
+  border-color: #ffffff;
+  font-weight: 700;
+}
+
+.q-pill.incorrect-pill {
+  background: #171717;
+  color: #737373;
+  border-color: #404040;
+  text-decoration: line-through;
+}
+
+/* Buttons in B&W */
+.btn-primary {
+  background: #ffffff;
+  color: #000000;
+  font-weight: 700;
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: 1px solid #ffffff;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.18s ease;
+  user-select: none;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: #e5e5e5;
+  border-color: #e5e5e5;
+  transform: translateY(-1px);
+}
+
+.btn-primary:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.btn-primary:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.btn-secondary {
+  background: #121212;
+  color: #ffffff;
+  font-weight: 600;
+  padding: 10px 18px;
+  border-radius: 8px;
+  border: 1px solid #333333;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.18s ease;
+  user-select: none;
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background: #212121;
+  border-color: #737373;
+}
+
+.btn-secondary:active:not(:disabled) {
+  background: #1a1a1a;
+}
+
+.btn-secondary:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+/* Progress bar in monochrome */
+.progress-bar-bw {
+  height: 6px;
+  background: #1a1a1a;
+  border-radius: 3px;
+  overflow: hidden;
+  border: 1px solid #262626;
+}
+
+.progress-fill-bw {
+  height: 100%;
+  background: #ffffff;
+  border-radius: 3px;
+  transition: width 0.4s ease;
+}
