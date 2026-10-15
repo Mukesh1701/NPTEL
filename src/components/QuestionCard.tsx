@@ -5,11 +5,12 @@ interface Props {
   question: Question;
   questionNumber: number;
   totalQuestions: number;
-  onSubmit: (selectedIds: string[]) => void;
-  submitted: boolean;
+  onSelectOption?: (selectedIds: string[]) => void;
+  onSubmit?: (selectedIds: string[]) => void;
+  submitted?: boolean;
   selectedAnswer: string[] | null;
   correctAnswer: string[];
-  isCorrect: boolean | null;
+  isCorrect?: boolean | null;
   reviewMode?: boolean;
   practiceMode?: boolean;
 }
@@ -18,11 +19,12 @@ export default function QuestionCard({
   question,
   questionNumber,
   totalQuestions,
+  onSelectOption,
   onSubmit,
-  submitted,
+  submitted = false,
   selectedAnswer,
   correctAnswer,
-  isCorrect,
+  isCorrect = null,
   reviewMode = false,
   practiceMode = false,
 }: Props) {
@@ -36,11 +38,14 @@ export default function QuestionCard({
 
   function toggleOption(id: string) {
     if (submitted || reviewMode) return;
+    let next: string[];
     if (isMulti) {
-      setSelected((prev) => (prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]));
+      next = selected.includes(id) ? selected.filter((x) => x !== id) : [...selected, id];
     } else {
-      setSelected([id]);
+      next = [id];
     }
+    setSelected(next);
+    onSelectOption?.(next);
   }
 
   function getOptionClass(optId: string): string {
@@ -57,7 +62,7 @@ export default function QuestionCard({
       return 'option-btn dimmed';
     }
 
-    if (selected.includes(optId)) {
+    if ((selectedAnswer ?? selected).includes(optId)) {
       return 'option-btn selected';
     }
     return 'option-btn';
@@ -114,14 +119,14 @@ export default function QuestionCard({
           <svg className="w-4 h-4 text-white flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
-          Select all options that apply before submitting.
+          Select all options that apply.
         </div>
       )}
 
       {/* Options List */}
       <div className="space-y-3 mb-6">
         {question.options.map((opt) => {
-          const isSelected = selected.includes(opt.id);
+          const isSelected = (selectedAnswer ?? selected).includes(opt.id);
           const isCorrectAnswer = correctAnswer.includes(opt.id);
           const showResultIcons = reviewMode || submitted;
 
@@ -151,19 +156,26 @@ export default function QuestionCard({
         })}
       </div>
 
-      {/* Answer Feedback in B&W */}
-      {submitted && isCorrect !== null && practiceMode && (
+      {/* Answer Feedback in Review Mode or Submitted */}
+      {(reviewMode || (submitted && isCorrect !== null)) && (
         <div className="rounded-xl p-4 sm:p-5 mb-6 border border-neutral-700 bg-neutral-950 animate-fade-in">
-          <div className="flex items-center gap-2 mb-2">
+          <div className="flex flex-wrap items-center gap-2 mb-2">
             <span
               className={`text-xs font-bold px-2.5 py-1 rounded uppercase tracking-wider ${
-                isCorrect ? 'bg-white text-black' : 'bg-neutral-800 text-neutral-200 border border-neutral-600'
+                isCorrect
+                  ? 'bg-white text-black'
+                  : isCorrect === false
+                  ? 'bg-neutral-800 text-neutral-200 border border-neutral-600'
+                  : 'bg-neutral-900 text-neutral-400 border border-neutral-800'
               }`}
             >
-              {isCorrect ? '✓ Correct Answer' : '✕ Incorrect'}
+              {isCorrect ? '✓ Correct Answer' : isCorrect === false ? '✕ Incorrect' : '— Skipped'}
             </span>
             <span className="text-xs text-neutral-400">
               Correct Answer: <strong className="text-white">{correctAnswer.join(', ')}</strong>
+            </span>
+            <span className="text-xs font-medium px-2 py-0.5 rounded bg-neutral-900 border border-neutral-800 text-neutral-300 ml-auto">
+              {isCorrect ? `+${question.marks} Mark${question.marks > 1 ? 's' : ''}` : '0 Marks'}
             </span>
           </div>
 
@@ -176,8 +188,8 @@ export default function QuestionCard({
         </div>
       )}
 
-      {/* Submit Button (Practice Mode) */}
-      {practiceMode && !submitted && !reviewMode && (
+      {/* Optional individual Submit button if explicitly used in practice mode */}
+      {practiceMode && !submitted && !reviewMode && onSubmit && (
         <button
           id="submit-answer-btn"
           type="button"
@@ -191,3 +203,4 @@ export default function QuestionCard({
     </div>
   );
 }
+
