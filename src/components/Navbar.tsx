@@ -8,7 +8,7 @@ export default function Navbar() {
 
   const navLinks = [
     { to: '/', label: 'Home' },
-    { to: '/week/1', label: 'Week 1 Practice' },
+    // { to: '/week/1', label: 'Week 1 Practice' },
     { to: '/mock-exam', label: 'Mock Exam' },
   ];
 

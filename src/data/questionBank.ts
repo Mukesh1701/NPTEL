@@ -546,7 +546,7 @@ S. Tension and frustration`,
       { id: 'D', text: '1-Q, 2-P, 3-R, 4-S' },
     ],
     correctAnswers: ['B'],
-    explanation: '1-R (Limp/hanging hands denote boredom), 2-P (Open hands show trust and interest), 3-S (Clenched hands indicate tension/frustration), 4-Q (Fists signal determination or anger). Option B is correct.',
+    explanation: '1-R (Limp/hanging hands denote boredom), 2-P (Open hands show trust and interest), 3-S (Clenched hands indicate tension/frustration), 4-Q (Fists signal determination or anger). This matching is correct.',
     marks: 1,
   },
 
@@ -802,7 +802,7 @@ S. A leader hears both sides of a dispute before deciding`,
       { id: 'D', text: '1-R, 2-S, 3-Q, 4-P' },
     ],
     correctAnswers: ['B'],
-    explanation: '1-Q (Content: noting official instructions), 2-P (Empathetic: hearing distressed colleague), 3-R (Appreciative: responding warmly to creative idea), 4-S (Analytical: weighing both sides of dispute). Option B is correct.',
+    explanation: '1-Q (Content: noting official instructions), 2-P (Empathetic: hearing distressed colleague), 3-R (Appreciative: responding warmly to creative idea), 4-S (Analytical: weighing both sides of dispute). This matching is correct.',
     marks: 1,
   },
 
@@ -1060,7 +1060,7 @@ T. Moving the right hand to express refusal`,
       { id: 'D', text: '1-R, 2-P, 3-T, 4-S, 5-Q' },
     ],
     correctAnswers: ['A'],
-    explanation: '1-R (Bulgaria: nodding up/down means "no"), 2-T (Japan: moving right hand for refusal), 3-P (Sicily: raising chin for "no"), 4-Q (Mexicans: value relationship before business), 5-S (Americans: hamburger sandwich criticism style). Option A is correct.',
+    explanation: '1-R (Bulgaria: nodding up/down means "no"), 2-T (Japan: moving right hand for refusal), 3-P (Sicily: raising chin for "no"), 4-Q (Mexicans: value relationship before business), 5-S (Americans: hamburger sandwich criticism style). This matching is correct.',
     marks: 1,
   },
   {
@@ -1159,7 +1159,7 @@ T. Moving the right hand to express refusal`,
       { id: "A", text: "Listening simply to promote/strengthen our own views" },
       { id: "B", text: "Listening to each and every word of the speaker" },
       { id: "C", text: "Listening to words and analyzing them simultaneously" },
-      { id: "D", text: "None of the above" },
+      { id: "D", text: "None of these choices" },
     ],
     correctAnswers: ["A"],
     explanation: "In combative listening, the listener is not seeking mutual understanding but rather listening solely to find fault and champion their own stance.",
@@ -1175,7 +1175,7 @@ T. Moving the right hand to express refusal`,
       { id: "A", text: "Speaker" },
       { id: "B", text: "Listener" },
       { id: "C", text: "Medium of communication" },
-      { id: "D", text: "All of the above" },
+      { id: "D", text: "All of these choices" },
     ],
     correctAnswers: ["D"],
     explanation: "Breakdowns can originate from speaker errors (encoding), listener biases (decoding), or transmission failures in the channel/medium.",
@@ -1635,7 +1635,7 @@ T. Moving the right hand to express refusal`,
       { id: "A", text: "Books" },
       { id: "B", text: "Internet sources" },
       { id: "C", text: "Journals" },
-      { id: "D", text: "All of the above" },
+      { id: "D", text: "All of these choices" },
     ],
     correctAnswers: ["D"],
     explanation: "Published books, internet databases, and academic journals are established secondary sources of literature.",
@@ -1667,7 +1667,7 @@ T. Moving the right hand to express refusal`,
       { id: "A", text: "It is costlier and time-consuming than other methods of data collection." },
       { id: "B", text: "It both interprets and reports human behaviour." },
       { id: "C", text: "It is a holistic method in itself." },
-      { id: "D", text: "Both A and B" },
+      { id: "D", text: "Both costlier/time-consuming and interpreting/reporting human behaviour" },
     ],
     correctAnswers: ["A"],
     explanation: "Direct observational studies require substantial time, logistics, and personnel investment compared to surveys or questionnaires.",
@@ -1849,7 +1849,7 @@ T. Moving the right hand to express refusal`,
       { id: "A", text: "To share a common leadership" },
       { id: "B", text: "To hold joint accountability for performance" },
       { id: "C", text: "To work dedicatedly for achieving a common goal" },
-      { id: "D", text: "All of the above" },
+      { id: "D", text: "All of these choices" },
     ],
     correctAnswers: ["D"],
     explanation: "High-performing team members foster shared leadership, collective mutual accountability, and goal dedication.",
@@ -2009,7 +2009,7 @@ T. Moving the right hand to express refusal`,
       { id: "A", text: "Explaining the vision" },
       { id: "B", text: "Expressing the vision through behaviour and action" },
       { id: "C", text: "Extending the vision to different contexts" },
-      { id: "D", text: "All of the above" },
+      { id: "D", text: "All of these choices" },
     ],
     correctAnswers: ["D"],
     explanation: "Visionary leaders excel at articulating, enacting, and extrapolating a compelling vision across diverse organizational environments.",
@@ -2025,7 +2025,7 @@ T. Moving the right hand to express refusal`,
       { id: "A", text: "Vision and self-confidence" },
       { id: "B", text: "Ability to articulate the vision" },
       { id: "C", text: "Extraordinary behaviour" },
-      { id: "D", text: "All of the above" },
+      { id: "D", text: "All of these choices" },
     ],
     correctAnswers: ["D"],
     explanation: "Charismatic leaders inspire deep loyalty through strong personal conviction, persuasive communication, and exceptional actions.",
@@ -2905,14 +2905,66 @@ T. Moving the right hand to express refusal`,
   }
 ];
 
+export function shuffleQuestionOptions(question: Question): Question {
+  if (!question.options || question.options.length <= 1) {
+    return { ...question };
+  }
+
+  const optionLetters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
+
+  // Keep track of each option and its original ID
+  const optionsWithOrig = question.options.map((opt) => ({
+    originalId: opt.id,
+    text: opt.text,
+  }));
+
+  // Fisher-Yates shuffle
+  const shuffled = [...optionsWithOrig];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+
+  // Ensure the options order is actually jumbled and not identical to original
+  if (
+    shuffled.length > 1 &&
+    shuffled.every((opt, idx) => opt.originalId === question.options[idx].id)
+  ) {
+    [shuffled[0], shuffled[1]] = [shuffled[1], shuffled[0]];
+  }
+
+  // Re-assign IDs (A, B, C, D...) based on their new positions
+  const newOptions: Option[] = shuffled.map((item, idx) => ({
+    id: optionLetters[idx] || String.fromCharCode(65 + idx),
+    text: item.text,
+  }));
+
+  // Re-map correctAnswers to point to the new letter IDs
+  const newCorrectAnswers = shuffled
+    .map((item, idx) => {
+      if (question.correctAnswers.includes(item.originalId)) {
+        return newOptions[idx].id;
+      }
+      return null;
+    })
+    .filter((id): id is string => id !== null);
+
+  return {
+    ...question,
+    options: newOptions,
+    correctAnswers: newCorrectAnswers,
+  };
+}
+
 export function getQuestionsByWeek(week: number): Question[] {
-  return QUESTION_BANK.filter((q) => q.week === week);
+  return QUESTION_BANK.filter((q) => q.week === week).map(shuffleQuestionOptions);
 }
 
 export function getAllQuestions(): Question[] {
-  return [...QUESTION_BANK];
+  return QUESTION_BANK.map(shuffleQuestionOptions);
 }
 
 export function getWeekNumbers(): number[] {
   return Array.from({ length: 12 }, (_, i) => i + 1);
 }
+

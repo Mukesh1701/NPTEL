@@ -17,11 +17,9 @@ function arraysEqual(a: string[], b: string[]) {
   return a.length === b.length && [...a].sort().every((v, i) => v === [...b].sort()[i]);
 }
 
-export default function WeekPracticePage() {
-  const { weekNum } = useParams<{ weekNum: string }>();
+function WeekPracticeContent({ week }: { week: number }) {
   const navigate = useNavigate();
-  const week = parseInt(weekNum ?? '1', 10);
-  const questions: Question[] = getQuestionsByWeek(week);
+  const [questions, setQuestions] = useState<Question[]>(() => getQuestionsByWeek(week));
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [answers, setAnswers] = useState<Record<string, AnswerState>>({});
@@ -64,6 +62,7 @@ export default function WeekPracticePage() {
   const retryAll = () => {
     setAnswers({});
     setCurrentIndex(0);
+    setQuestions(getQuestionsByWeek(week));
     setPhase('practice');
   };
 
@@ -332,3 +331,10 @@ export default function WeekPracticePage() {
     </div>
   );
 }
+
+export default function WeekPracticePage() {
+  const { weekNum } = useParams<{ weekNum: string }>();
+  const week = parseInt(weekNum ?? '1', 10);
+  return <WeekPracticeContent key={week} week={week} />;
+}
+

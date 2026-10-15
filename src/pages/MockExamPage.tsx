@@ -18,7 +18,7 @@ function arraysEqual(a: string[], b: string[]) {
 
 export default function MockExamPage() {
   const navigate = useNavigate();
-  const allQuestions: Question[] = getAllQuestions();
+  const [allQuestions, setAllQuestions] = useState<Question[]>(() => getAllQuestions());
   const [currentIndex, setCurrentIndex] = useState(0);
   const [answers, setAnswers] = useState<Record<string, AnswerState>>({});
   const [phase, setPhase] = useState<Phase>('exam');
@@ -48,6 +48,7 @@ export default function MockExamPage() {
   const retake = () => {
     setAnswers({});
     setCurrentIndex(0);
+    setAllQuestions(getAllQuestions());
     setPhase('exam');
   };
 
