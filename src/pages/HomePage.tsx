@@ -11,10 +11,10 @@ const WEEK_TOPICS: Record<number, string> = {
   6: 'Business Letters, Formats, Meeting Minutes & Adjustment',
   7: 'Data Collection, Report Preparation, Sampling & Circumlocution',
   8: 'Group Discussion, Team Roles, Report Structure & Bibliography',
-  9: 'Week 9 Assignments (Coming Soon)',
-  10: 'Week 10 Assignments (Coming Soon)',
-  11: 'Week 11 Assignments (Coming Soon)',
-  12: 'Week 12 Assignments (Coming Soon)',
+  9: 'Leadership Styles, Charisma, Vision & GD Dynamics',
+  10: 'Speaking Skills, Oral Presentations, Combating Anxiety & Debates',
+  11: 'Presentation Delivery, Vote of Thanks, Exit Interviews & Résumé Basics',
+  12: 'Interview Strategies, Emotional Intelligence, Grammar & Active Voice',
 };
 
 export default function HomePage() {
@@ -74,7 +74,7 @@ export default function HomePage() {
         <div className="bw-card p-4 sm:p-5">
           <div className="text-xs text-neutral-400 font-medium mb-1">Available Qs</div>
           <div className="text-2xl sm:text-3xl font-extrabold text-white">{totalQuestions}</div>
-          <div className="text-[11px] text-neutral-500 mt-1">Week 1 Active</div>
+          <div className="text-[11px] text-neutral-500 mt-1">All 12 Weeks Active</div>
         </div>
 
         <div className="bw-card p-4 sm:p-5">
