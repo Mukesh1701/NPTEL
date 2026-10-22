@@ -1,13 +1,13 @@
 import { useNavigate } from 'react-router-dom';
-import { COURSE_CONFIG, getQuestionsByWeek, getMultipleChoiceQuestions } from '../data/questionBank';
+import { COURSE_CONFIG, getQuestionsByWeek, getMultipleChoiceQuestions, getTrueFalseQuestions } from '../data/questionBank';
 import { loadProgress } from '../utils/storage';
 
 const WEEK_TOPICS: Record<number, string> = {
   1: 'Introduction to LLMs, Distributional Semantics & Linguistic Relations',
   2: 'Probabilistic Language Models, N-grams & Smoothing',
   3: 'Neural Networks, Activation Functions, Backpropagation & Regularization',
-  4: 'Negotiation Skills, WATNA/ZOPA, Culture & Needs',
-  5: 'Communication Breakdown & Business Writing Principles',
+  4: 'Word Embeddings, Word2Vec, BPE, WordPiece & FastText',
+  5: 'RNNs, LSTMs, Seq2Seq Models, Decoding & Attention Mechanism',
   6: 'Transformers, RoPE, Positional Embeddings & Attention',
   7: 'Pre-trained Language Models, BERT, GPT & Scaling Laws',
   8: 'Instruction Tuning, RLHF, DPO & Reward Models',
@@ -24,8 +24,11 @@ export default function HomePage() {
   const mcQuestions = getMultipleChoiceQuestions();
   const mcProgress = progress.weekProgress[13];
   const mcBestScore = mcProgress?.bestScore ?? null;
+  const tfQuestions = getTrueFalseQuestions();
+  const tfProgress = progress.weekProgress[14];
+  const tfBestScore = tfProgress?.bestScore ?? null;
   const totalQuestions = allWeeklyQuestions.flat().length;
-  const weeksWithProgress = Object.keys(progress.weekProgress).length;
+  const weeksWithProgress = Object.keys(progress.weekProgress).filter((k) => Number(k) <= 12).length;
   const overallPct =
     progress.totalQuestionsAnswered > 0
       ? Math.round((progress.totalCorrect / progress.totalQuestionsAnswered) * 100)
@@ -191,7 +194,7 @@ export default function HomePage() {
             );
           })}
 
-          {/* Dedicated Section beside Week 12: Multiple Choice Questions (Weeks 6–12) */}
+          {/* Dedicated Section: Multiple Choice Questions */}
           <button
             id="multi-choice-section-card"
             type="button"
@@ -211,12 +214,12 @@ export default function HomePage() {
             <div className="font-bold text-white text-sm sm:text-base mb-1 flex items-center gap-2">
               Multiple Choice
               <span className="text-[10px] font-semibold px-1.5 py-0.5 rounded bg-neutral-800 text-neutral-300 border border-neutral-700">
-                W6–W12
+                Multi-Select
               </span>
             </div>
 
             <div className="text-xs text-neutral-400 line-clamp-2 min-h-[32px] mb-3">
-              All multi-select questions from Weeks 6 to 12 in one dedicated practice mode.
+              All multi-select questions across the course in one dedicated practice mode.
             </div>
 
             <div className="pt-3 border-t border-neutral-900 flex items-center justify-between text-xs">
@@ -226,6 +229,49 @@ export default function HomePage() {
 
               {mcBestScore !== null ? (
                 <span className="font-bold text-white">{mcBestScore}%</span>
+              ) : (
+                <span className="text-neutral-300 font-semibold group-hover:underline">
+                  Practice →
+                </span>
+              )}
+            </div>
+          </button>
+
+          {/* Dedicated Section: True or False Questions */}
+          <button
+            id="true-false-section-card"
+            type="button"
+            onClick={() => navigate('/true-false')}
+            className="bw-card p-5 text-left transition-all border border-neutral-600 hover:border-white hover:bg-neutral-900/80 cursor-pointer bg-neutral-950 relative group"
+          >
+            <div className="flex items-center justify-between mb-3">
+              <span className="w-9 h-9 rounded-lg flex items-center justify-center font-black text-xs bg-white text-black">
+                T/F
+              </span>
+
+              <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-white text-black uppercase tracking-wider">
+                Special
+              </span>
+            </div>
+
+            <div className="font-bold text-white text-sm sm:text-base mb-1 flex items-center gap-2">
+              True or False
+              <span className="text-[10px] font-semibold px-1.5 py-0.5 rounded bg-neutral-800 text-neutral-300 border border-neutral-700">
+                Binary
+              </span>
+            </div>
+
+            <div className="text-xs text-neutral-400 line-clamp-2 min-h-[32px] mb-3">
+              All True or False conceptual verification questions in one focused drill mode.
+            </div>
+
+            <div className="pt-3 border-t border-neutral-900 flex items-center justify-between text-xs">
+              <span className="text-neutral-400 font-medium">
+                {tfQuestions.length} questions
+              </span>
+
+              {tfBestScore !== null ? (
+                <span className="font-bold text-white">{tfBestScore}%</span>
               ) : (
                 <span className="text-neutral-300 font-semibold group-hover:underline">
                   Practice →

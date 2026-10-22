@@ -483,491 +483,278 @@ export const QUESTION_BANK: Question[] = [
     explanation: "An excessively large learning rate causes gradient descent steps to overshoot minima, causing the loss to oscillate wildly or explode/diverge.",
     marks: 1,
   },
+    // ==========================================
+  // WEEK 4 - Word Embeddings, Word2Vec, BPE & FastText (9 Questions)
   // ==========================================
-  // WEEK 4 - Negotiation & Cross-Cultural Skills (15 Questions)
+  {
+    id: "week4-q1",
+    week: 4,
+    type: "single_choice",
+    topic: "CBOW Model",
+    question: "State True or False.\nIn the Continuous Bag of Words (CBOW) model, the surrounding context words are used to predict the centre target word.",
+    options: [
+      { id: "A", text: "True" },
+      { id: "B", text: "False" },
+    ],
+    correctAnswers: ["A"],
+    explanation: "In the Continuous Bag of Words (CBOW) architecture, the distributed representations of surrounding context words within a window are used to predict the centre target word. (In contrast, Skip-Gram predicts surrounding context words given the centre word).",
+    marks: 1,
+  },
+  {
+    id: "week4-q2",
+    week: 4,
+    type: "single_choice",
+    topic: "One-Hot Vector Cosine Similarity",
+    question: "Two distinct words in a vocabulary are represented as one-hot vectors. What is the cosine similarity between them?",
+    options: [
+      { id: "A", text: "0" },
+      { id: "B", text: "1" },
+      { id: "C", text: "-1" },
+      { id: "D", text: "0.5" },
+    ],
+    correctAnswers: ["A"],
+    explanation: "Two distinct words in one-hot encoding have a 1 at different coordinate dimensions and 0 everywhere else. Their dot product is 0, making them strictly orthogonal with a cosine similarity of 0.",
+    marks: 1,
+  },
+  {
+    id: "week4-q3",
+    week: 4,
+    type: "single_choice",
+    topic: "Byte Pair Encoding (BPE)",
+    question: "A toy corpus has an initial base vocabulary of 8 unique characters. If the Byte Pair Encoding (BPE) algorithm performs exactly 5 merge operations, what is the final size of the vocabulary?",
+    options: [
+      { id: "A", text: "13" },
+      { id: "B", text: "8" },
+      { id: "C", text: "5" },
+      { id: "D", text: "40" },
+    ],
+    correctAnswers: ["A"],
+    explanation: "Each merge operation in BPE identifies the most frequent adjacent symbol pair and creates exactly one new merged token added to the vocabulary. Starting with 8 base characters, 5 merge operations result in 8 + 5 = 13 vocabulary items.",
+    marks: 1,
+  },
+  {
+    id: "week4-q4",
+    week: 4,
+    type: "single_choice",
+    topic: "WordPiece vs BPE",
+    question: "Which statement correctly describes how WordPiece chooses the next pair to merge, compared with BPE?",
+    options: [
+      { id: "A", text: "BPE merges the most frequent pair, while WordPiece merges the pair maximising Frequency(A, B) / (Frequency(A) x Frequency(B))" },
+      { id: "B", text: "WordPiece merges the most frequent pair, while BPE merges the pair maximising Frequency(A, B) / (Frequency(A) x Frequency(B))" },
+      { id: "C", text: "WordPiece merges the pair maximising Frequency(A, B) / Frequency(A, B)" },
+      { id: "D", text: "Both BPE and WordPiece merge the pair that minimises total vocabulary entropy" },
+    ],
+    correctAnswers: ["A"],
+    explanation: "BPE greedily selects the pair of adjacent tokens with the highest raw co-occurrence count. WordPiece instead merges the pair that maximizes the training data likelihood relative to unigram independent frequencies, which is proportional to Frequency(A, B) / (Frequency(A) × Frequency(B)).",
+    marks: 1,
+  },
+  {
+    id: "week4-q5",
+    week: 4,
+    type: "multiple_choice",
+    topic: "Subword Tokenization",
+    question: "Which of the following statements about subword tokenization are true? (Select all that apply.)",
+    options: [
+      { id: "A", text: "Rare and morphologically complex words are split into meaningful subword units." },
+      { id: "B", text: "It offers a middle ground between word-level and character-level tokenization." },
+      { id: "C", text: "It keeps the vocabulary size bounded while still being able to represent unseen words." },
+      { id: "D", text: "It eliminates the need for word embedding lookup layers entirely." },
+    ],
+    correctAnswers: ["A", "B", "C"],
+    explanation: "Subword tokenization (such as BPE, WordPiece, and SentencePiece) strikes a middle ground: high-frequency words are kept intact, rare or inflected words are split into meaningful subwords/morphemes, and vocabulary size remains fixed while maintaining full coverage of unseen words without out-of-vocabulary exceptions.",
+    marks: 1,
+  },
+  {
+    id: "week4-q6",
+    week: 4,
+    type: "single_choice",
+    topic: "Word-Context Matrix & Cosine Similarity",
+    question: "Consider the following word-context count matrix:\n\n| | c1 | c2 | c3 | c4 | c5 |\n|---|---|---|---|---|---|\n| **w1** | 2 | 0 | 3 | 1 | 4 |\n| **w2** | 1 | 3 | 0 | 2 | 2 |\n| **w3** | 4 | 1 | 2 | 0 | 3 |\n\nCompute the cosine similarity between w1 and w2.",
+    options: [
+      { id: "A", text: "0.516" },
+      { id: "B", text: "0.642" },
+      { id: "C", text: "0.418" },
+      { id: "D", text: "0.785" },
+    ],
+    correctAnswers: ["A"],
+    explanation: "w1 = [2, 0, 3, 1, 4] and w2 = [1, 3, 0, 2, 2].\n\n1. Dot product: w1 · w2 = (2×1) + (0×3) + (3×0) + (1×2) + (4×2) = 2 + 0 + 0 + 2 + 8 = 12.\n2. Euclidean norm of w1: ||w1|| = √(2² + 0² + 3² + 1² + 4²) = √(4 + 0 + 9 + 1 + 16) = √30 ≈ 5.4772.\n3. Euclidean norm of w2: ||w2|| = √(1² + 3² + 0² + 2² + 2²) = √(1 + 9 + 0 + 4 + 4) = √18 ≈ 4.2426.\n4. Cosine similarity = (w1 · w2) / (||w1|| × ||w2||) = 12 / (√30 × √18) = 12 / √540 = 12 / 23.2379 ≈ 0.516.",
+    marks: 2,
+  },
+  {
+    id: "week4-q7",
+    week: 4,
+    type: "single_choice",
+    topic: "Self-Supervised Word2Vec",
+    question: "Why is Word2Vec training described as self-supervised?",
+    options: [
+      { id: "A", text: "The corpus itself supplies the labels, since the context of a word acts as its supervision signal." },
+      { id: "B", text: "It requires human annotators to manually label semantic similarity pairs." },
+      { id: "C", text: "It relies on reinforcement learning with reward signals from human feedback." },
+      { id: "D", text: "Supervision is supplied by external knowledge bases such as WordNet synsets." },
+    ],
+    correctAnswers: ["A"],
+    explanation: "Word2Vec is self-supervised because it generates its own learning supervision from raw unannotated text: words appearing within the sliding context window act naturally as training labels for each target word.",
+    marks: 1,
+  },
+  {
+    id: "week4-q8",
+    week: 4,
+    type: "single_choice",
+    topic: "Negative Sampling",
+    question: "What is the purpose of negative sampling in Word2Vec training?",
+    options: [
+      { id: "A", text: "To avoid computing the softmax normalisation over the entire vocabulary" },
+      { id: "B", text: "To remove low-frequency words from the corpus automatically" },
+      { id: "C", text: "To prevent word embeddings from shrinking to zero norm" },
+      { id: "D", text: "To dynamically prune rare tokens from the sliding window" },
+    ],
+    correctAnswers: ["A"],
+    explanation: "Full softmax requires summing exp(v_w · v_c) over all |V| words in the vocabulary for the denominator at every training step, which is computationally expensive. Negative sampling approximates this by casting the task as multiple binary logistic regressions over the true target and a small sample (k) of noise ('negative') words.",
+    marks: 1,
+  },
+  {
+    id: "week4-q9",
+    week: 4,
+    type: "single_choice",
+    topic: "FastText Embeddings & OOV",
+    question: "Which of the following representations handles Out-Of-Vocabulary (OOV) words best?",
+    options: [
+      { id: "A", text: "FastText embeddings" },
+      { id: "B", text: "Word2Vec (Skip-gram)" },
+      { id: "C", text: "Word2Vec (CBOW)" },
+      { id: "D", text: "GloVe embeddings" },
+    ],
+    correctAnswers: ["A"],
+    explanation: "FastText breaks each word down into subword character n-grams. When an out-of-vocabulary (OOV) word is encountered at test time, its vector can be computed by summing the embeddings of its constituent character n-grams, whereas Word2Vec and GloVe assign unknown tokens or fail.",
+    marks: 1,
+  },
   // ==========================================
-  {
-    id: 'week4-q1',
-    week: 4,
-    type: 'single_choice',
-    topic: 'BATNA / WATNA',
-    question: 'What does the acronym WATNA stand for in negotiation?',
-    options: [
-      { id: 'A', text: 'Worst Alternative to a Negotiated Agreement' },
-      { id: 'B', text: 'Wise Alternative to a Negotiated Agreement' },
-      { id: 'C', text: 'Worst Argument to a Negotiated Agreement' },
-      { id: 'D', text: 'Workable Alternative to a Negotiated Agreement' },
-    ],
-    correctAnswers: ['A'],
-    explanation: 'WATNA stands for Worst Alternative to a Negotiated Agreement, representing the lowest threshold outcome if talks collapse.',
-    marks: 1,
-  },
-  {
-    id: 'week4-q2',
-    week: 4,
-    type: 'single_choice',
-    topic: 'Negotiation Quote',
-    question: 'To which former US President is attributed the following line?\n"Let us never negotiate out of fear, but let us never fear to negotiate."',
-    options: [
-      { id: 'A', text: 'Abraham Lincoln' },
-      { id: 'B', text: 'John F. Kennedy' },
-      { id: 'C', text: 'Franklin D. Roosevelt' },
-      { id: 'D', text: 'Woodrow Wilson' },
-    ],
-    correctAnswers: ['B'],
-    explanation: 'This famous statement was delivered by President John F. Kennedy in his Inaugural Address on January 20, 1961.',
-    marks: 1,
-  },
-  {
-    id: 'week4-q3',
-    week: 4,
-    type: 'single_choice',
-    topic: 'Definition of Negotiation',
-    question: 'According to Alan Fowler, negotiation is any form of meeting or discussion in which the parties use argument and persuasion to arrive at:',
-    options: [
-      { id: 'A', text: 'A unilateral decision favouring the stronger party' },
-      { id: 'B', text: 'An agreed decision or action' },
-      { id: 'C', text: 'A legally binding written contract' },
-      { id: 'D', text: 'A postponement of the conflict' },
-    ],
-    correctAnswers: ['B'],
-    explanation: 'Alan Fowler defines negotiation as discussion wherein parties engage persuasion to reach an agreed decision or course of action.',
-    marks: 1,
-  },
-  {
-    id: 'week4-q4',
-    week: 4,
-    type: 'single_choice',
-    topic: 'Negotiation Process',
-    question: 'To which of the following does a real negotiation proceed through?',
-    options: [
-      { id: 'A', text: 'Authority, not instruction' },
-      { id: 'B', text: 'Instruction and persuasion, not authority and imposition' },
-      { id: 'C', text: 'Imposition backed by seniority' },
-      { id: 'D', text: 'Silence and withdrawal' },
-    ],
-    correctAnswers: ['B'],
-    explanation: 'Genuine negotiation moves through constructive persuasion and dialogue, avoiding arbitrary imposition of unilateral authority.',
-    marks: 1,
-  },
-  {
-    id: 'week4-q5',
-    week: 4,
-    type: 'single_choice',
-    topic: 'Cultural Differences',
-    question: 'In Hong Kong, hospital rooms avoid the number four because the sound shi is a homophone for:',
-    options: [
-      { id: 'A', text: 'Poverty' },
-      { id: 'B', text: 'Illness' },
-      { id: 'C', text: 'Death' },
-      { id: 'D', text: 'Bad luck in trade' },
-    ],
-    correctAnswers: ['C'],
-    explanation: 'Tetraphobia: In Chinese languages including Cantonese, the numeral 4 (sei/shi) sounds almost identical to the word for death.',
-    marks: 1,
-  },
-  {
-    id: 'week4-q6',
-    week: 4,
-    type: 'single_choice',
-    topic: 'Culture',
-    question: 'Alfred G. Smith, in Communication and Culture, defines culture as:',
-    options: [
-      { id: 'A', text: 'A code we learn and share' },
-      { id: 'B', text: 'The sum of a nation\'s laws and religion' },
-      { id: 'C', text: 'An unchanging set of inherited traits' },
-      { id: 'D', text: 'The visible customs of a majority community' },
-    ],
-    correctAnswers: ['A'],
-    explanation: 'Alfred G. Smith famously defined culture as "a code we learn and share".',
-    marks: 1,
-  },
-  {
-    id: 'week4-q7',
-    week: 4,
-    type: 'single_choice',
-    topic: 'Negotiation Styles',
-    question: 'Which style, according to the colour-based classification of negotiation styles, is a mix of competitive and cooperative approaches and is recommended for negotiators?',
-    options: [
-      { id: 'A', text: 'Red style' },
-      { id: 'B', text: 'Blue style' },
-      { id: 'C', text: 'Purple style' },
-      { id: 'D', text: 'Green style' },
-    ],
-    correctAnswers: ['C'],
-    explanation: 'The Purple style synthesizes the firmness of the Red (competitive) approach with the warmth of the Blue (cooperative) approach.',
-    marks: 1,
-  },
-  {
-    id: 'week4-q8',
-    week: 4,
-    type: 'single_choice',
-    topic: 'Management Style',
-    question: 'According to McGregor, the modern style of management is built on a balance between:',
-    options: [
-      { id: 'A', text: 'Control and freedom' },
-      { id: 'B', text: 'Profit and loss' },
-      { id: 'C', text: 'Reward and punishment' },
-      { id: 'D', text: 'Authority and seniority' },
-    ],
-    correctAnswers: ['A'],
-    explanation: "Douglas McGregor's management theories emphasize harmonizing organizational control with individual employee autonomy and freedom.",
-    marks: 1,
-  },
-  {
-    id: 'week4-q9',
-    week: 4,
-    type: 'single_choice',
-    topic: 'ZOPA',
-    question: 'ZOPA stands for the ______ of possible agreement, the space in which an agreement can be reached.',
-    options: [
-      { id: 'A', text: 'Area' },
-      { id: 'B', text: 'Zone' },
-      { id: 'C', text: 'Medium' },
-      { id: 'D', text: 'Arena' },
-    ],
-    correctAnswers: ['B'],
-    explanation: 'ZOPA = Zone of Possible Agreement, the overlap range between buyer and seller reservation prices.',
-    marks: 1,
-  },
-  {
-    id: 'week4-q10',
-    week: 4,
-    type: 'multiple_choice',
-    topic: 'Qualities of a Good Negotiator',
-    question: 'Which of the following are listed as qualities of a good negotiator? (Select all that apply.)',
-    options: [
-      { id: 'A', text: 'Confidence' },
-      { id: 'B', text: 'Rigidity' },
-      { id: 'C', text: 'Honesty' },
-      { id: 'D', text: 'Aggression' },
-    ],
-    correctAnswers: ['A', 'C'],
-    explanation: 'Confidence and honesty build credibility and trust; rigidity and aggression alienate counterparties.',
-    marks: 1,
-  },
-  {
-    id: 'week4-q11',
-    week: 4,
-    type: 'multiple_choice',
-    topic: 'Formal Negotiation',
-    question: 'In a formal negotiation, which of the following are pre-announced beforehand to both parties? (Select all that apply.)',
-    options: [
-      { id: 'A', text: 'The personal relationship of the parties' },
-      { id: 'B', text: 'The agenda' },
-      { id: 'C', text: 'The fear factor involved' },
-      { id: 'D', text: 'The venue, date and time' },
-    ],
-    correctAnswers: ['B', 'D'],
-    explanation: 'Structured formal negotiations establish explicit mutual clarity on the agenda and logistics (venue, date, time).',
-    marks: 1,
-  },
-  {
-    id: 'week4-q12',
-    week: 4,
-    type: 'multiple_choice',
-    topic: 'Factors Affecting Negotiation',
-    question: 'Which two are listed among the subjective factors that affect negotiation? (Select all that apply.)',
-    options: [
-      { id: 'A', text: 'The upper and lower limits of concession' },
-      { id: 'B', text: 'Personal relationship between the parties' },
-      { id: 'C', text: 'The fear factor' },
-      { id: 'D', text: 'The written summary of the agreement' },
-    ],
-    correctAnswers: ['B', 'C'],
-    explanation: 'Personal dynamics, emotional temperament, and fear factors are subjective psychological dimensions influencing negotiation.',
-    marks: 1,
-  },
-  {
-    id: 'week4-q13',
-    week: 4,
-    type: 'multiple_choice',
-    topic: 'Low-Context Cultures',
-    question: 'Which of the following peoples are described as belonging to low-context cultures? (Select all that apply.)',
-    options: [
-      { id: 'A', text: 'Japanese' },
-      { id: 'B', text: 'Arabs' },
-      { id: 'C', text: 'North Americans' },
-      { id: 'D', text: 'Germans' },
-    ],
-    correctAnswers: ['C', 'D'],
-    explanation: 'German, Swiss, and North American cultures are direct and low-context, prioritizing explicit, literal verbal transmission.',
-    marks: 1,
-  },
-  {
-    id: 'week4-q14',
-    week: 4,
-    type: 'multiple_choice',
-    topic: "Maslow's Hierarchy of Needs",
-    question: "According to Maslow's hierarchy, which of the following count as physiological (basic) needs? (Select all that apply.)",
-    options: [
-      { id: 'A', text: 'Food' },
-      { id: 'B', text: 'Creativity' },
-      { id: 'C', text: 'Morality' },
-      { id: 'D', text: 'Shelter' },
-    ],
-    correctAnswers: ['A', 'D'],
-    explanation: 'Food, water, sleep, and shelter form the baseline physiological survival needs in Maslowâ€™s hierarchy.',
-    marks: 1,
-  },
-  {
-    id: 'week4-q15',
-    week: 4,
-    type: 'single_choice',
-    topic: 'Match Culture/Country with Practice',
-    question: `Match the culture/country in Column A with the practice described in Column B:
-
-Column A:
-1. Bulgaria
-2. Japan
-3. Sicily
-4. Mexicans
-5. Americans
-
-Column B:
-P. Raising the chin to say "no"
-Q. Feel insulted if asked to get down to business at once
-R. Nodding the head up and down to express "no"
-S. "Hamburger style" of management when criticising
-T. Moving the right hand to express refusal`,
-    options: [
-      { id: 'A', text: '1-R, 2-T, 3-P, 4-Q, 5-S' },
-      { id: 'B', text: '1-T, 2-R, 3-Q, 4-P, 5-S' },
-      { id: 'C', text: '1-P, 2-T, 3-R, 4-S, 5-Q' },
-      { id: 'D', text: '1-R, 2-P, 3-T, 4-S, 5-Q' },
-    ],
-    correctAnswers: ['A'],
-    explanation: '1-R (Bulgaria: nodding up/down means "no"), 2-T (Japan: moving right hand for refusal), 3-P (Sicily: raising chin for "no"), 4-Q (Mexicans: value relationship before business), 5-S (Americans: hamburger sandwich criticism style). This matching is correct.',
-    marks: 1,
-  },
+  // WEEK 5 - RNNs, LSTMs, Seq2Seq & Attention (8 Questions)
+  // ==========================================
   {
     id: "week5-q1",
     week: 5,
     type: "single_choice",
-    topic: "Communication Breakdown",
-    question: "The difference in status can cause ______ communication breakdown.",
+    topic: "Decoding Temperature",
+    question: "State True or False.\nLowering the temperature parameter during decoding flattens the output probability distribution and increases the diversity of the generated text.",
     options: [
-      { id: "A", text: "Organisational" },
-      { id: "B", text: "Intrapersonal" },
+      { id: "A", text: "True" },
+      { id: "B", text: "False" },
     ],
-    correctAnswers: ["A"],
-    explanation: "Hierarchical disparity and status differentials within an organizational structure often create communication barriers between superiors and subordinates.",
+    correctAnswers: ["B"],
+    explanation: "False. Lowering temperature (T < 1) sharpens the probability distribution, making high-probability tokens even more dominant and reducing diversity (approaching greedy argmax). In contrast, raising temperature (T > 1) flattens the distribution and increases randomness/diversity.",
     marks: 1,
   },
   {
     id: "week5-q2",
     week: 5,
     type: "single_choice",
-    topic: "Business Writing",
-    question: "The goal of business writing is to impress clients with ______ language.",
+    topic: "Attention Weights Computation",
+    question: "Given the following encoder and decoder hidden states, compute the attention weights. (Use dot product as the scoring function.)\n\nEncoder hidden states: h₁ = [3, 1], h₂ = [1, 4], h₃ = [2, 2]\nDecoder hidden state: s = [1, 1]",
     options: [
-      { id: "A", text: "Colloquial" },
-      { id: "B", text: "Professional" },
+      { id: "A", text: "0.212, 0.576, 0.212" },
+      { id: "B", text: "0.333, 0.333, 0.333" },
+      { id: "C", text: "0.250, 0.500, 0.250" },
+      { id: "D", text: "0.150, 0.700, 0.150" },
     ],
-    correctAnswers: ["B"],
-    explanation: "Business writing aims to build credibility and clarity by employing polished, objective, and professional language.",
-    marks: 1,
+    correctAnswers: ["A"],
+    explanation: "1. Compute dot-product attention scores:\n   • e₁ = s · h₁ = (1×3) + (1×1) = 4\n   • e₂ = s · h₂ = (1×1) + (1×4) = 5\n   • e₃ = s · h₃ = (1×2) + (1×2) = 4\n\n2. Compute softmax:\n   • e⁴ ≈ 54.598\n   • e⁵ ≈ 148.413\n   • e⁴ ≈ 54.598\n   • Sum = 54.598 + 148.413 + 54.598 = 257.609\n\n3. Attention weights:\n   • α₁ = 54.598 / 257.609 ≈ 0.212\n   • α₂ = 148.413 / 257.609 ≈ 0.576\n   • α₃ = 54.598 / 257.609 ≈ 0.212.",
+    marks: 3,
   },
   {
     id: "week5-q3",
     week: 5,
     type: "single_choice",
-    topic: "Ethical Communication",
-    question: "The act of plagiarism comes under ______ form of communication breakdown.",
+    topic: "Vanishing Gradients in Vanilla RNNs",
+    question: "What is the primary cause of the vanishing gradient problem in a vanilla RNN?",
     options: [
-      { id: "A", text: "Ethical" },
-      { id: "B", text: "Physical" },
+      { id: "A", text: "Repeated multiplication by the recurrent weight matrix and by activation derivatives smaller than 1 across many timesteps" },
+      { id: "B", text: "The use of the cross-entropy loss function during sequence-to-sequence training" },
+      { id: "C", text: "Over-saturation of softmax probabilities in the output vocabulary layer" },
+      { id: "D", text: "High dropout rates applied between the recurrent hidden states" },
     ],
     correctAnswers: ["A"],
-    explanation: "Plagiarism violates intellectual honesty and professional integrity, categorizing it as an ethical failure in communication.",
+    explanation: "In Backpropagation Through Time (BPTT), gradients backpropagated over multiple timesteps involve chains of matrix multiplications with Whh and the activation derivative (e.g. tanh' ≤ 1). If the eigenvalues/singular values are < 1, the gradient magnitude vanishes exponentially as sequence length increases.",
     marks: 1,
   },
   {
     id: "week5-q4",
     week: 5,
     type: "single_choice",
-    topic: "Writing Plans",
-    question: "While using ______ plan, a neutral tone should be maintained.",
+    topic: "LSTM Output Gate",
+    question: "Which gate in an LSTM controls how much of the current cell state is exposed as the hidden state at that timestep?",
     options: [
-      { id: "A", text: "A direct" },
-      { id: "B", text: "An indirect" },
+      { id: "A", text: "Output gate" },
+      { id: "B", text: "Forget gate" },
+      { id: "C", text: "Input gate" },
+      { id: "D", text: "Candidate gate" },
     ],
     correctAnswers: ["A"],
-    explanation: "A direct writing plan delivers routine messages or objective information upfront where an objective and neutral tone is maintained.",
+    explanation: "In an LSTM cell, the output gate (o_t) applies a sigmoid filter to decide which components of the updated cell state C_t are exposed as the visible hidden state h_t = o_t ⊙ tanh(C_t).",
     marks: 1,
   },
   {
     id: "week5-q5",
     week: 5,
     type: "single_choice",
-    topic: "Semantic Gap",
-    question: "A semantic gap occurs because meanings are ______.",
+    topic: "Attention Mechanism Motivation",
+    question: "Which limitation of the basic encoder-decoder Seq2Seq model does the attention mechanism directly address?",
     options: [
-      { id: "A", text: "Confusing" },
-      { id: "B", text: "Contextualized" },
+      { id: "A", text: "The whole source sequence has to be compressed into a single fixed-length context vector." },
+      { id: "B", text: "RNN decoders can only generate tokens in reverse chronological order." },
+      { id: "C", text: "Encoder representations cannot handle sequences longer than 10 words." },
+      { id: "D", text: "Loss gradients cannot be computed through the teacher forcing mechanism." },
     ],
-    correctAnswers: ["B"],
-    explanation: "Semantic gaps arise because words and symbols derive their specific connotations and meanings from personal, cultural, and situational contexts.",
+    correctAnswers: ["A"],
+    explanation: "Vanilla Seq2Seq models suffer from the information bottleneck: the final encoder hidden state must compress all semantic content of an entire source sequence into one fixed-size vector. Attention eliminates this bottleneck by allowing the decoder to dynamically attend to all encoder hidden states at every decoding step.",
     marks: 1,
   },
   {
     id: "week5-q6",
     week: 5,
     type: "single_choice",
-    topic: "Communication Breakdown",
-    question: "Which of the following best defines communication breakdown?",
+    topic: "Encoder-Decoder Conditioning",
+    question: "Which of the following is a correct statement about the encoder-decoder architecture?",
     options: [
-      { id: "A", text: "Failure to write correctly" },
-      { id: "B", text: "Any step that blocks or interferes with message flow" },
-      { id: "C", text: "Misuse of technical jargon" },
-      { id: "D", text: "Lack of vocabulary" },
+      { id: "A", text: "The decoder generates each output conditioned on the encoder representation and on its own previously generated tokens." },
+      { id: "B", text: "The encoder and decoder must always process sequences of identical length." },
+      { id: "C", text: "Decoder hidden states are computed completely independently of encoder hidden states." },
+      { id: "D", text: "The decoder produces all sequence tokens simultaneously in a non-autoregressive step." },
     ],
-    correctAnswers: ["B"],
-    explanation: "Communication breakdown occurs whenever any barrier or noise disrupts, distorts, or obstructs the flow of messages between sender and receiver.",
+    correctAnswers: ["A"],
+    explanation: "In an encoder-decoder model, the encoder maps the source sequence into contextual vectors, and the decoder autoregressively generates output tokens, conditioning each step on both the encoder's source representations and all previously generated target tokens.",
     marks: 1,
   },
   {
     id: "week5-q7",
     week: 5,
     type: "single_choice",
-    topic: "Combative Listening",
-    question: "Which one of the following statements is most suitable for combative listening?",
+    topic: "RNN Advantages over Fixed-Window Models",
+    question: "Why are RNNs preferred over fixed-window feed-forward neural language models?",
     options: [
-      { id: "A", text: "Listening simply to promote/strengthen our own views" },
-      { id: "B", text: "Listening to each and every word of the speaker" },
-      { id: "C", text: "Listening to words and analyzing them simultaneously" },
-      { id: "D", text: "None of these choices" },
+      { id: "A", text: "They can process sequences of arbitrary length and share the same weights across timesteps." },
+      { id: "B", text: "They train much faster because computations across timesteps can be completely parallelized." },
+      { id: "C", text: "They completely eliminate all vanishing and exploding gradient problems." },
+      { id: "D", text: "They require no hidden state vectors to maintain history." },
     ],
     correctAnswers: ["A"],
-    explanation: "In combative listening, the listener is not seeking mutual understanding but rather listening solely to find fault and champion their own stance.",
+    explanation: "Fixed-window feed-forward models require an artificial context limit and cannot share parameters across different word positions. RNNs maintain recurrent transition dynamics with weight sharing across all timesteps, naturally accepting variable and arbitrary-length sequences.",
     marks: 1,
   },
   {
     id: "week5-q8",
     week: 5,
     type: "single_choice",
-    topic: "Causes of Communication Breakdown",
-    question: "Which among the following can be the probable cause(s) of communication breakdown?",
+    topic: "Seq2Seq Properties",
+    question: "Which of the following statements about Seq2Seq models are true?\n\n(i) The generation of the target sequence is conditioned on the source sequence.\n(ii) In the basic model, the encoder compresses the input into a fixed-size vector representation.\n(iii) The input and output sequences must have the same length.",
     options: [
-      { id: "A", text: "Speaker" },
-      { id: "B", text: "Listener" },
-      { id: "C", text: "Medium of communication" },
-      { id: "D", text: "All of these choices" },
-    ],
-    correctAnswers: ["D"],
-    explanation: "Breakdowns can originate from speaker errors (encoding), listener biases (decoding), or transmission failures in the channel/medium.",
-    marks: 1,
-  },
-  {
-    id: "week5-q9",
-    week: 5,
-    type: "single_choice",
-    topic: "Writing Patterns",
-    question: "Which of the following attributes is best related to the geographical pattern of writing used in an organization?",
-    options: [
-      { id: "A", text: "Topical" },
-      { id: "B", text: "Spatial" },
-      { id: "C", text: "Casual" },
-      { id: "D", text: "Chronological" },
-    ],
-    correctAnswers: ["B"],
-    explanation: "A spatial pattern organizes information according to geography, physical space, or location layout.",
-    marks: 1,
-  },
-  {
-    id: "week5-q10",
-    week: 5,
-    type: "single_choice",
-    topic: "Steps in Business Writing",
-    question: "Arrange the following steps in business writing from first to last:\n(i) Researching\n(ii) Revising\n(iii) Conceptualizing\n(iv) Drafting",
-    options: [
-      { id: "A", text: "(iii) \u2192 (i) \u2192 (iv) \u2192 (ii) [Conceptualizing \u2192 Researching \u2192 Drafting \u2192 Revising]" },
-      { id: "B", text: "(i) \u2192 (iii) \u2192 (iv) \u2192 (ii)" },
-      { id: "C", text: "(iii) \u2192 (iv) \u2192 (i) \u2192 (ii)" },
-      { id: "D", text: "(iv) \u2192 (i) \u2192 (iii) \u2192 (ii)" },
+      { id: "A", text: "(i) and (ii)" },
+      { id: "B", text: "(ii) and (iii)" },
+      { id: "C", text: "(i) and (iii)" },
+      { id: "D", text: "(i), (ii) and (iii)" },
     ],
     correctAnswers: ["A"],
-    explanation: "The logical writing process begins with Conceptualizing the message, Researching details, Drafting the document, and finally Revising/Editing.",
-    marks: 1,
-  },
-  {
-    id: "week5-q11",
-    week: 5,
-    type: "multiple_choice",
-    topic: "Organisational Communication Breakdown",
-    question: "Which organisational characteristics contribute to communication breakdown? (Select all that apply.)",
-    options: [
-      { id: "A", text: "Fear of superior's perception" },
-      { id: "B", text: "Negative attitudes in organisation" },
-      { id: "C", text: "Audience-centred approach" },
-      { id: "D", text: "Synergy between verbal and non-verbal communication" },
-    ],
-    correctAnswers: ["A", "B"],
-    explanation: "Fear of managerial disapproval and entrenched negative workplace culture suppress open dialogue, causing communication breakdowns.",
-    marks: 1,
-  },
-  {
-    id: "week5-q12",
-    week: 5,
-    type: "multiple_choice",
-    topic: "Effective Writing",
-    question: "Which of the following are features of effective writing? (Select all that apply.)",
-    options: [
-      { id: "A", text: "Directness" },
-      { id: "B", text: "Use of jargon" },
-      { id: "C", text: "Easy to understand" },
-      { id: "D", text: "Long sentences" },
-    ],
-    correctAnswers: ["A", "C"],
-    explanation: "Directness and reader-friendly comprehension are hallmarks of effective written business communication.",
-    marks: 1,
-  },
-  {
-    id: "week5-q13",
-    week: 5,
-    type: "multiple_choice",
-    topic: "Official Business Writing",
-    question: "A piece of official business writing which is circulated within the organisation is called: (Select all that apply.)",
-    options: [
-      { id: "A", text: "Official letter" },
-      { id: "B", text: "Circular" },
-      { id: "C", text: "Official report" },
-      { id: "D", text: "Memorandum" },
-    ],
-    correctAnswers: ["B", "D"],
-    explanation: "Circulars and memorandums (memos) are primary instruments for internal organizational communication.",
-    marks: 1,
-  },
-  {
-    id: "week5-q14",
-    week: 5,
-    type: "multiple_choice",
-    topic: "Ethical Considerations in Communication",
-    question: "Which of the following comprise ethical considerations in communication? (Select all that apply.)",
-    options: [
-      { id: "A", text: "Mixed reactions" },
-      { id: "B", text: "Misquoting" },
-      { id: "C", text: "Plagiarism" },
-      { id: "D", text: "Misunderstanding" },
-    ],
-    correctAnswers: ["B", "C"],
-    explanation: "Misquoting sources and plagiarizing content are direct breaches of ethical communication standards.",
-    marks: 1,
-  },
-  {
-    id: "week5-q15",
-    week: 5,
-    type: "multiple_choice",
-    topic: "Principles of Business Writing",
-    question: "Find out the correct statement(s) about the principles of business writing. (Select all that apply.)",
-    options: [
-      { id: "A", text: "It should have clarity." },
-      { id: "B", text: "It should have pompous and erratic words." },
-      { id: "C", text: "It should be plain and concise." },
-      { id: "D", text: "Professional tone needs not to be maintained in every situation." },
-    ],
-    correctAnswers: ["A", "C"],
-    explanation: "Clarity, plain words, and concise expression are cardinal virtues of effective business composition.",
+    explanation: "Statements (i) and (ii) are true: generation of target sequences is conditioned on the source sequence representation, and basic Seq2Seq encoders compress inputs into a fixed-size vector representation. Statement (iii) is false: Seq2Seq was specifically introduced to map between sequences of unequal lengths (e.g., machine translation).",
     marks: 1,
   },
   // ==========================================
@@ -2047,6 +1834,25 @@ export function shuffleQuestionOptions(question: Question): Question {
     return { ...question };
   }
 
+  // Preserve standard True/False option layout (A: True, B: False)
+  const optTexts = question.options.map((o) => o.text.trim().toLowerCase());
+  if (
+    optTexts.length === 2 &&
+    optTexts.includes('true') &&
+    optTexts.includes('false')
+  ) {
+    const trueOpt = question.options.find((o) => o.text.trim().toLowerCase() === 'true')!;
+    const isTrueCorrect = question.correctAnswers.includes(trueOpt.id);
+    return {
+      ...question,
+      options: [
+        { id: 'A', text: 'True' },
+        { id: 'B', text: 'False' },
+      ],
+      correctAnswers: isTrueCorrect ? ['A'] : ['B'],
+    };
+  }
+
   const optionLetters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
 
   // Keep track of each option and its original ID
@@ -2103,11 +1909,26 @@ export function getAllQuestions(): Question[] {
 
 export function getMultipleChoiceQuestions(): Question[] {
   return QUESTION_BANK.filter(
-    (q) => q.week >= 6 && q.week <= 12 && q.type === 'multiple_choice'
+    (q) => q.type === 'multiple_choice'
   ).map(shuffleQuestionOptions);
+}
+
+export function isTrueFalseQuestion(q: Question): boolean {
+  const optTexts = q.options.map((o) => o.text.trim().toLowerCase());
+  const hasTrueFalseOptions =
+    optTexts.length === 2 &&
+    optTexts.includes('true') &&
+    optTexts.includes('false');
+  const asksTrueFalse =
+    q.question.toLowerCase().includes('true or false') ||
+    q.question.toLowerCase().includes('true/false');
+  return hasTrueFalseOptions || asksTrueFalse;
+}
+
+export function getTrueFalseQuestions(): Question[] {
+  return QUESTION_BANK.filter(isTrueFalseQuestion).map(shuffleQuestionOptions);
 }
 
 export function getWeekNumbers(): number[] {
   return Array.from({ length: 12 }, (_, i) => i + 1);
 }
-

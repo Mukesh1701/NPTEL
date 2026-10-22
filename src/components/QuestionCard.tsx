@@ -35,6 +35,10 @@ export default function QuestionCard({
   }, [question.id, selectedAnswer]);
 
   const isMulti = question.type === 'multiple_choice';
+  const isTF =
+    question.options.length === 2 &&
+    question.options.some((o) => o.text.trim().toLowerCase() === 'true') &&
+    question.options.some((o) => o.text.trim().toLowerCase() === 'false');
 
   function toggleOption(id: string) {
     if (submitted || reviewMode) return;
@@ -84,7 +88,7 @@ export default function QuestionCard({
             </div>
             <div className="flex items-center gap-2 mt-0.5">
               <span className="text-[11px] font-semibold px-2 py-0.5 rounded bg-neutral-900 border border-neutral-800 text-neutral-300 uppercase tracking-wider">
-                {isMulti ? 'Multiple Choice' : 'Single Choice'}
+                {isMulti ? 'Multiple Choice' : isTF ? 'True / False' : 'Single Choice'}
               </span>
               {question.topic && (
                 <span className="text-[11px] text-neutral-400 hidden sm:inline">

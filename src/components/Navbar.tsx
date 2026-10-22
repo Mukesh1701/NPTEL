@@ -8,7 +8,8 @@ export default function Navbar() {
 
   const navLinks = [
     { to: '/', label: 'Home' },
-    { to: '/multiple-choice', label: 'Multi-Select (W6–12)' },
+    { to: '/true-false', label: 'True / False' },
+    { to: '/multiple-choice', label: 'Multi-Select' },
     { to: '/mock-exam', label: 'Mock Exam' },
   ];
 
