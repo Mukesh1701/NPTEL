@@ -152,7 +152,7 @@ function WeekPracticeContent({ week }: { week: number }) {
             Week {week} Performance
           </h2>
           <p className="text-neutral-400 text-xs sm:text-sm mb-6">
-            NPTEL Soft Skills Assignment Results
+            NPTEL Online Certification Assignment Results
           </p>
 
           {/* Monochrome Score Circle */}

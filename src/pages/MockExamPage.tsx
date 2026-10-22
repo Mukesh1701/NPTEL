@@ -108,7 +108,7 @@ export default function MockExamPage() {
           </span>
 
           <h2 className="text-2xl sm:text-3xl font-extrabold text-white mb-2">
-            Soft Skills Mock Exam Results
+            NPTEL Mock Exam Results
           </h2>
           <p className="text-neutral-400 text-xs sm:text-sm mb-8">
             Evaluation across all active questions

@@ -3,9 +3,9 @@ import { COURSE_CONFIG, getQuestionsByWeek, getMultipleChoiceQuestions } from '.
 import { loadProgress } from '../utils/storage';
 
 const WEEK_TOPICS: Record<number, string> = {
-  1: 'Listening, Personality, Thinking Hats & Communication',
-  2: 'Positivity, Johari Window, Voice & Telephonic Etiquette',
-  3: 'Proxemics, Haptics, Chronemics & Listening Barriers',
+  1: 'Introduction to LLMs, Distributional Semantics & Linguistic Relations',
+  2: 'Probabilistic Language Models, N-grams & Smoothing',
+  3: 'Neural Networks, Activation Functions, Backpropagation & Regularization',
   4: 'Negotiation Skills, WATNA/ZOPA, Culture & Needs',
   5: 'Communication Breakdown & Business Writing Principles',
   6: 'Transformers, RoPE, Positional Embeddings & Attention',
@@ -45,7 +45,7 @@ export default function HomePage() {
         </h1>
 
         <p className="text-neutral-300 text-sm sm:text-base max-w-2xl leading-relaxed mb-4">
-          Interactive assignment practice system for NPTEL Soft Skills. Test your knowledge across weekly modules and simulate full exam conditions.
+          Interactive assignment practice system for NPTEL Large Language Models (LLMs). Test your knowledge across weekly modules and simulate full exam conditions.
         </p>
 
         <p className="text-neutral-400 text-xs sm:text-sm mb-8">
