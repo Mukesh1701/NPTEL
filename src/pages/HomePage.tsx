@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { COURSE_CONFIG, getQuestionsByWeek } from '../data/questionBank';
+import { COURSE_CONFIG, getQuestionsByWeek, getMultipleChoiceQuestions } from '../data/questionBank';
 import { loadProgress } from '../utils/storage';
 
 const WEEK_TOPICS: Record<number, string> = {
@@ -8,19 +8,22 @@ const WEEK_TOPICS: Record<number, string> = {
   3: 'Proxemics, Haptics, Chronemics & Listening Barriers',
   4: 'Negotiation Skills, WATNA/ZOPA, Culture & Needs',
   5: 'Communication Breakdown & Business Writing Principles',
-  6: 'Business Letters, Formats, Meeting Minutes & Adjustment',
-  7: 'Data Collection, Report Preparation, Sampling & Circumlocution',
-  8: 'Group Discussion, Team Roles, Report Structure & Bibliography',
-  9: 'Leadership Styles, Charisma, Vision & GD Dynamics',
-  10: 'Speaking Skills, Oral Presentations, Combating Anxiety & Debates',
-  11: 'Presentation Delivery, Vote of Thanks, Exit Interviews & Résumé Basics',
-  12: 'Interview Strategies, Emotional Intelligence, Grammar & Active Voice',
+  6: 'Transformers, RoPE, Positional Embeddings & Attention',
+  7: 'Pre-trained Language Models, BERT, GPT & Scaling Laws',
+  8: 'Instruction Tuning, RLHF, DPO & Reward Models',
+  9: 'Knowledge Graphs, Embeddings & Link Prediction',
+  10: 'Model Compression, Pruning, Quantization & Circuits',
+  11: 'DistMult, ComplEx, SimplE & Hierarchical Embeddings',
+  12: 'LLM Bias, Fairness, Safety & Responsible AI',
 };
 
 export default function HomePage() {
   const navigate = useNavigate();
   const progress = loadProgress();
   const allWeeklyQuestions = Array.from({ length: 12 }, (_, i) => getQuestionsByWeek(i + 1));
+  const mcQuestions = getMultipleChoiceQuestions();
+  const mcProgress = progress.weekProgress[13];
+  const mcBestScore = mcProgress?.bestScore ?? null;
   const totalQuestions = allWeeklyQuestions.flat().length;
   const weeksWithProgress = Object.keys(progress.weekProgress).length;
   const overallPct =
@@ -187,6 +190,49 @@ export default function HomePage() {
               </button>
             );
           })}
+
+          {/* Dedicated Section beside Week 12: Multiple Choice Questions (Weeks 6–12) */}
+          <button
+            id="multi-choice-section-card"
+            type="button"
+            onClick={() => navigate('/multiple-choice')}
+            className="bw-card p-5 text-left transition-all border border-neutral-600 hover:border-white hover:bg-neutral-900/80 cursor-pointer bg-neutral-950 relative group"
+          >
+            <div className="flex items-center justify-between mb-3">
+              <span className="w-9 h-9 rounded-lg flex items-center justify-center font-black text-xs bg-white text-black">
+                MSQ
+              </span>
+
+              <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-white text-black uppercase tracking-wider">
+                Special
+              </span>
+            </div>
+
+            <div className="font-bold text-white text-sm sm:text-base mb-1 flex items-center gap-2">
+              Multiple Choice
+              <span className="text-[10px] font-semibold px-1.5 py-0.5 rounded bg-neutral-800 text-neutral-300 border border-neutral-700">
+                W6–W12
+              </span>
+            </div>
+
+            <div className="text-xs text-neutral-400 line-clamp-2 min-h-[32px] mb-3">
+              All multi-select questions from Weeks 6 to 12 in one dedicated practice mode.
+            </div>
+
+            <div className="pt-3 border-t border-neutral-900 flex items-center justify-between text-xs">
+              <span className="text-neutral-400 font-medium">
+                {mcQuestions.length} questions
+              </span>
+
+              {mcBestScore !== null ? (
+                <span className="font-bold text-white">{mcBestScore}%</span>
+              ) : (
+                <span className="text-neutral-300 font-semibold group-hover:underline">
+                  Practice →
+                </span>
+              )}
+            </div>
+          </button>
         </div>
       </div>
 

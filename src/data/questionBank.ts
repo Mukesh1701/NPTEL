@@ -1,4 +1,4 @@
-﻿export interface Option {
+export interface Option {
   id: string;
   text: string;
 }
@@ -2422,6 +2422,12 @@ export function getQuestionsByWeek(week: number): Question[] {
 
 export function getAllQuestions(): Question[] {
   return QUESTION_BANK.map(shuffleQuestionOptions);
+}
+
+export function getMultipleChoiceQuestions(): Question[] {
+  return QUESTION_BANK.filter(
+    (q) => q.week >= 6 && q.week <= 12 && q.type === 'multiple_choice'
+  ).map(shuffleQuestionOptions);
 }
 
 export function getWeekNumbers(): number[] {

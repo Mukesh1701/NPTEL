@@ -5,6 +5,8 @@ import HomePage from './pages/HomePage';
 import WeekPracticePage from './pages/WeekPracticePage';
 import MockExamPage from './pages/MockExamPage';
 
+import MultiChoicePracticePage from './pages/MultiChoicePracticePage';
+
 function NotFound() {
   return (
     <div className="min-h-screen pt-24 flex items-center justify-center px-4">
@@ -27,6 +29,8 @@ export default function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/week/:weekNum" element={<WeekPracticePage />} />
+        <Route path="/multiple-choice" element={<MultiChoicePracticePage />} />
+        <Route path="/practice/multiple-choice" element={<MultiChoicePracticePage />} />
         <Route path="/mock-exam" element={<MockExamPage />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
